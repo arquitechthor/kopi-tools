@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container">
+        <div class="card col-md-8 mx-auto mt-5">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Link Details</h5>
+                <span class="badge bg-primary" th:text="${link.category}">Category</span>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title text-primary" th:text="${link.title}">Title</h3>
+                <p class="card-text text-muted" th:text="${link.description}">Description</p>
+
+                <hr>
+
+                <div class="mb-3">
+                    <strong>URL:</strong>
+                    <a th:href="${link.url}" target="_blank" th:text="${link.url}">http://example.com</a>
+                    <i class="fas fa-external-link-alt small text-muted ms-1"></i>
+                </div>
+
+                <div class="mb-3" th:if="${link.tags}">
+                    <strong>Tags:</strong>
+                    <span th:each="tag : ${#strings.arraySplit(link.tags, ',')}"
+                        class="badge bg-light text-dark border me-1" th:text="${tag.trim()}">Tag</span>
+                </div>
+            </div>
+            <div class="card-footer bg-white text-end">
+                <a href="/links" class="btn btn-secondary">Back</a>
+                <a th:href="@{/links/{id}/edit(id=${link.id})}" class="btn btn-warning">Edit</a>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+
+</html>

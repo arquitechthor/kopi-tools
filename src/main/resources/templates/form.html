@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container">
+        <div class="card col-md-8 mx-auto mt-4">
+            <div class="card-header bg-white">
+                <h4 class="mb-0" th:text="${link.id == null ? 'New Link' : 'Edit Link'}">Link Form</h4>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/links}" th:object="${link}" method="post">
+                    <input type="hidden" th:field="*{id}" />
+
+                    <div class="mb-3">
+                        <label for="url" class="form-label">URL *</label>
+                        <input type="text" class="form-control" id="url" th:field="*{url}"
+                            placeholder="https://example.com" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}">Error</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title *</label>
+                        <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Link Title"
+                            required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category *</label>
+                        <input type="text" class="form-control" id="category" th:field="*{category}"
+                            placeholder="e.g., Development, News" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Error
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" th:field="*{description}" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tags" class="form-label">Tags (comma separated)</label>
+                        <input type="text" class="form-control" id="tags" th:field="*{tags}"
+                            placeholder="java, spring, web">
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/links" class="btn btn-secondary me-md-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save Link</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+
+</html>
