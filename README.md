@@ -32,16 +32,34 @@ Kopi Tools is a Multi-tool application built with Java 21 and Spring Boot. It in
 
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
-   cd kopi-links
+   git clone https://github.com/arquitechthor/kopi-tools.git
+   cd kopi-tools
    ```
 
 2. **Build the project**:
+   **Windows**:
    ```bash
-   ./mvnw clean install
+   .\mvnw.cmd clean package
+   ```
+   **Linux/Mac**:
+   ```bash
+   ./mvnw clean package
    ```
 
 3. **Run the application**:
+   
+   **Option A: Using Java (Recommended)**
+   This method is more robust against path issues on Windows.
+   ```bash
+   java -jar target/kopi-tools-0.0.1-SNAPSHOT.jar
+   ```
+
+   **Option B: Using Maven Wrapper**
+   **Windows**:
+   ```bash
+   .\mvnw.cmd spring-boot:run
+   ```
+   **Linux/Mac**:
    ```bash
    ./mvnw spring-boot:run
    ```
@@ -59,6 +77,12 @@ Kopi Tools is a Multi-tool application built with Java 21 and Spring Boot. It in
 
 The application uses an H2 file-based database stored in `./data`. 
 **Note**: The database files are excluded from version control for security.
+### AWS Synchronization (Optional)
+To enable S3 backup synchronization, set the following environment variables:
+- `AWS_ACCESS_KEY_ID`: Your AWS Access Key.
+- `AWS_SECRET_ACCESS_KEY`: Your AWS Secret Key.
+- `AWS_REGION`: AWS Region (default: `eu-west-1`).
+- `S3_BUCKET_NAME`: The S3 bucket name for backups.
 
 ## 📝 Usage
 
@@ -67,4 +91,4 @@ The application uses an H2 file-based database stored in `./data`.
 3. **Add Link**: Click "Add Link" to save a new URL.
 
 ---
-Created by [Your Name/Organization]
+Created by [Héctor Guzmán/Arquitechthor]
