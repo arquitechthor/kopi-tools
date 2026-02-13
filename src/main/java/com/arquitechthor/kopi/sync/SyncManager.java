@@ -13,7 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
+
 import java.time.Instant;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -22,7 +22,8 @@ import java.util.zip.ZipOutputStream;
 public class SyncManager {
 
     private static final String DATA_DIR = "data";
-    private static final String BACKUP_FILE_NAME = "kopi-tools-backup.zip";
+    // private static final String BACKUP_FILE_NAME = "kopi-tools-backup.zip"; //
+    // Dynamic now
     private final S3Client s3Client;
     private final String bucketName;
 
@@ -43,15 +44,21 @@ public class SyncManager {
         }
     }
 
-    public boolean checkForUpdate() {
+    private String getBackupFileName(String userId) {
+        return "kopi-tools-backup-" + userId + ".zip";
+    }
+
+    public boolean checkForUpdate(String userId) {
         if (!hasCredentials())
             return false;
+
+        String fileName = getBackupFileName(userId);
 
         try {
             // Check S3 last modified
             var headRequest = HeadObjectRequest.builder()
                     .bucket(bucketName)
-                    .key(BACKUP_FILE_NAME)
+                    .key(fileName)
                     .build();
             Instant s3LastModified = s3Client.headObject(headRequest).lastModified();
 
@@ -83,12 +90,13 @@ public class SyncManager {
         }
     }
 
-    public void downloadAndRestore() throws IOException {
-        System.out.println("Restoring backup from S3...");
-        Path zipPath = Paths.get(BACKUP_FILE_NAME);
+    public void downloadAndRestore(String userId) throws IOException {
+        System.out.println("Restoring backup from S3 for user: " + userId);
+        String fileName = getBackupFileName(userId);
+        Path zipPath = Paths.get(fileName);
 
         // Download
-        s3Client.getObject(b -> b.bucket(bucketName).key(BACKUP_FILE_NAME), zipPath);
+        s3Client.getObject(b -> b.bucket(bucketName).key(fileName), zipPath);
 
         // Unzip
         unzip(zipPath.toString(), DATA_DIR);
@@ -98,26 +106,28 @@ public class SyncManager {
         System.out.println("Restore completed.");
     }
 
-    public void uploadBackup() throws IOException {
-        System.out.println("Uploading backup to S3...");
-        Path zipPath = Paths.get(BACKUP_FILE_NAME);
+    public void uploadBackup(String userId) throws IOException {
+        System.out.println("Uploading backup to S3 for user: " + userId);
+        String fileName = getBackupFileName(userId);
+        Path zipPath = Paths.get(fileName);
 
         // Zip
         zip(DATA_DIR, zipPath.toString());
 
-        uploadBackupFile(zipPath); // Delegate
+        uploadBackupFile(zipPath, userId); // Delegate
 
         // Cleanup zip
         Files.deleteIfExists(zipPath);
         System.out.println("Upload completed.");
     }
 
-    public void uploadBackupFile(Path zipPath) throws IOException { // New method
-        System.out.println("Uploading backup file to S3: " + zipPath);
+    public void uploadBackupFile(Path zipPath, String userId) throws IOException {
+        String fileName = getBackupFileName(userId);
+        System.out.println("Uploading backup file to S3: " + zipPath + " as " + fileName);
 
         PutObjectRequest putOb = PutObjectRequest.builder()
                 .bucket(bucketName)
-                .key(BACKUP_FILE_NAME)
+                .key(fileName)
                 .build();
 
         s3Client.putObject(putOb, RequestBody.fromFile(zipPath));

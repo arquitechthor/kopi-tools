@@ -78,11 +78,18 @@ Kopi Tools is a Multi-tool application built with Java 21 and Spring Boot. It in
 The application uses an H2 file-based database stored in `./data`. 
 **Note**: The database files are excluded from version control for security.
 ### AWS Synchronization (Optional)
-To enable S3 backup synchronization, set the following environment variables:
+To enable S3 backup synchronization with Cognito authentication, set the following environment variables:
+
+**AWS S3 Config**:
 - `AWS_ACCESS_KEY_ID`: Your AWS Access Key.
 - `AWS_SECRET_ACCESS_KEY`: Your AWS Secret Key.
 - `AWS_REGION`: AWS Region (default: `eu-west-1`).
 - `S3_BUCKET_NAME`: The S3 bucket name for backups.
+
+**Cognito Config**:
+- `COGNITO_CLIENT_ID`: App Client ID from User Pool.
+- `COGNITO_CLIENT_SECRET`: App Client Secret.
+- `COGNITO_ISSUER_URI`: Issuer URI (e.g., `https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_xxxxxx`).
 
 ## 📝 Usage
 

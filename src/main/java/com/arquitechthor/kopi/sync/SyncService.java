@@ -41,7 +41,7 @@ public class SyncService {
         return bucketName;
     }
 
-    public void upload() throws IOException {
+    public void upload(String userId) throws IOException {
         if (!isConfigured()) {
             throw new IllegalStateException("AWS Credentials not configured");
         }
@@ -51,9 +51,16 @@ public class SyncService {
 
         try {
             jdbcTemplate.execute("BACKUP TO '" + backupFileName + "'");
-            syncManager.uploadBackupFile(backupPath);
+            syncManager.uploadBackupFile(backupPath, userId);
         } finally {
             Files.deleteIfExists(backupPath);
         }
+    }
+
+    public void restore(String userId) throws IOException {
+        if (!isConfigured()) {
+            throw new IllegalStateException("AWS Credentials not configured");
+        }
+        syncManager.downloadAndRestore(userId);
     }
 }
