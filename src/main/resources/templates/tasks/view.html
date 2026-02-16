@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::title}, ~{::content})}">
+
+<head>
+    <title>Task Details</title>
+</head>
+
+<body>
+    <div th:fragment="content">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h3 class="card-title mb-0" th:text="${task.title}">Task Title</h3>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="fw-bold">Category:</label>
+                    <span class="badge bg-info text-dark" th:text="${task.category}">Category</span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-bold">Description:</label>
+                    <p class="card-text" th:text="${task.description}">Description</p>
+                </div>
+
+                <div class="mb-3" th:if="${task.tags != null and !task.tags.isEmpty()}">
+                    <label class="fw-bold">Tags:</label>
+                    <div>
+                        <span th:each="tag : ${#strings.arraySplit(task.tags, ',')}" class="badge bg-secondary me-1"
+                            th:text="${tag.trim()}">Tag</span>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a th:href="@{/tasks}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to List</a>
+                    <a th:href="@{/tasks/edit/{id}(id=${task.id})}" class="btn btn-warning"><i
+                            class="fas fa-pencil-alt"></i> Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

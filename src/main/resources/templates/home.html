@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::title}, ~{::content})}">
+
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <div th:fragment="content">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h1 class="display-4">Welcome to Kopi Tools</h1>
+                <p class="lead">Select a tool to get started</p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <!-- Link Manager Card -->
+            <div class="col-md-5 col-lg-4 mb-4">
+                <div class="card h-100 text-center p-4 hover-shadow">
+                    <div class="card-body">
+                        <i class="fas fa-link fa-4x text-primary mb-3"></i>
+                        <h3 class="card-title">Link Manager</h3>
+                        <p class="card-text text-muted">Organize and access your favorite stored links.</p>
+                        <a th:href="@{/links}" class="btn btn-outline-primary stretched-link">Open Tool</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tasks List Card -->
+            <div class="col-md-5 col-lg-4 mb-4">
+                <div class="card h-100 text-center p-4 hover-shadow">
+                    <div class="card-body">
+                        <i class="fas fa-tasks fa-4x text-success mb-3"></i>
+                        <h3 class="card-title">Tasks List</h3>
+                        <p class="card-text text-muted">Manage your daily tasks with priorities.</p>
+                        <a th:href="@{/tasks}" class="btn btn-outline-success stretched-link">Open Tool</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
