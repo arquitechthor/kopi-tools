@@ -5,12 +5,14 @@ Kopi Tools is a Multi-tool application built with Java 21 and Spring Boot. It in
 ## 🚀 Features
 
 - **Link Manager**: Store, categorize, and manage web links.
-- **Categorization**: Links are organized by categories with collapsible sections.
+- **Task List**: Manage tasks with priorities, categories, and tags.
+- **Categorization**: Items are organized by categories with collapsible sections.
+- **Priority Management**: Move tasks up and down to change their priority.
 - **Quick Actions**:
-  - 🔗 Open link in a new tab.
-  - 👁️ View link details.
-  - ✏️ Edit link information.
-  - 🗑️ Delete link.
+  - 🔗 Manage links and tasks easily.
+  - 👁️ View details.
+  - ✏️ Edit information.
+  - 🗑️ Delete items.
 - **Responsive UI**: Built with Thymeleaf and Bootstrap.
 
 ## 🛠️ Technology Stack
@@ -93,9 +95,10 @@ To enable S3 backup synchronization with Cognito authentication, set the followi
 
 ## 📝 Usage
 
-1. **Home**: Dashboard showing all links grouped by category.
-2. **Tools > Links Manager**: Manage your links.
-3. **Add Link**: Click "Add Link" to save a new URL.
+1. **Home**: Dashboard showing all links and tasks grouped by category.
+2. **Tools > Links Manager**: Manage your web links.
+3. **Tools > Tasks List**: Manage your tasks, priorities, and categories.
+4. **Add items**: Click "Add Link" or "Add Task" to create new entries.
 
 ---
 Created by [Héctor Guzmán/Arquitechthor]

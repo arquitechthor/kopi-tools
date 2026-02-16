@@ -36,7 +36,7 @@ public class TaskController {
         return "tasks/form";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/{id}/edit")
     public String editTaskForm(@PathVariable Long id, Model model) {
         return taskService.getTaskById(id)
                 .map(task -> {
@@ -55,7 +55,7 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/{id}/delete")
     public String deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return "redirect:/tasks";

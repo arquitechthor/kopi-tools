@@ -36,23 +36,25 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            Tools
+                            <i class="fas fa-tools"></i> Tools
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/links">Links Manager</a></li>
-                            <li><a class="dropdown-item" href="/tasks">Tasks List</a></li>
+                            <li><a class="dropdown-item" href="/links"><i class="fas fa-link"></i> Links Manager</a>
+                            </li>
+                            <li><a class="dropdown-item" href="/tasks"><i class="fas fa-tasks"></i> Tasks List</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            Settings
+                            <i class="fas fa-cog"></i> Settings
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/settings/sync">Synchronization</a></li>
+                            <li><a class="dropdown-item" href="/settings/sync"><i class="fas fa-sync"></i>
+                                    Synchronization</a></li>
                         </ul>
                     </li>
 
@@ -66,7 +68,10 @@
                     <!-- User Info & Logout (Authenticated) -->
                     <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle"></i> <span sec:authentication="name">User</span>
+                            <i class="fas fa-user-circle"></i>
+                            <span
+                                th:text="${#authentication.principal instanceof T(org.springframework.security.oauth2.core.user.OAuth2User) ? #authentication.principal.attributes['email'] : #authentication.name}">User
+                                Email</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
